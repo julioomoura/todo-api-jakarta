@@ -1,25 +1,33 @@
 package com.pedantic.entity;
 
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "TODO")
 public class Todo extends BaseEntity {
 
-    @Column(name = "TASK")
+    @Column(name = "TASK", length = 140)
+    @NotEmpty(message = "A Todo task must be set")
+    @Size(min = 3, max = 140, message = "The minimum character length should be between {min} and {max}")
     private String task;
 
     @Column(name = "DATE_CREATED")
     private LocalDate dateCreated;
 
-    @Column(name = "DUE_DATE")
-    @FutureOrPresent
+    @Column(name = "DUE_DATE", nullable = false)
+    @NotNull(message = "Due date must be set")
+    @FutureOrPresent(message = "Due date cannot be before today")
+    @JsonbDateFormat(value="yyyy-MM-dd")
     private LocalDate dueDate;
 
     @Column(name = "COMPLETED")

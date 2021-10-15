@@ -5,19 +5,27 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "TODO_USER")
 public class TodoUser extends BaseEntity {
 
     @Column(name = "EMAIL", length = 100)
-    @Email
+    @NotEmpty(message = "An email must be set")
+    @Email(message = "Invalid email format")
     private String email;
 
     @Column(name = "PASSWORD")
+    @NotNull(message = "Password cannot be empty")
+    @Size(min = 8, max = 100, message = "Password length should be between {min} and {max}")
     private String password;
 
     @Column(name = "FULL_NAME")
+    @NotEmpty(message = "Name must be set")
+    @Size(min = 2, max = 100, message = "Name length should be between {min} and {max}")
     private String fullName;
 
 //    @OneToMany(mappedBy = "todoOwner")

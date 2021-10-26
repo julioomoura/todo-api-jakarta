@@ -3,6 +3,7 @@ package com.pedantic.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -11,6 +12,10 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "TODO_USER")
+@NamedQuery(name = "findByEmail", query = "SELECT u FROM TodoUser u WHERE u.email = :email")
+@NamedQuery(name = "findAll", query= "SELECT u FROM TodoUser u ORDER BY u.fullName")
+@NamedQuery(name = "findById", query= "SELECT u FROM TodoUser u WHERE u.id = :id")
+@NamedQuery(name = "findByFullName", query= "SELECT u FROM TodoUser u WHERE u.fullName LIKE :name")
 public class TodoUser extends BaseEntity {
 
     @Column(name = "EMAIL", length = 100)

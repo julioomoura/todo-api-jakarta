@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotEmpty;
@@ -14,6 +15,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "TODO")
+@NamedQuery(name = "findAllByTodoOwnerId", query = "SELECT t FROM Todo t WHERE t.todoOwner.id = :ownerId")
 public class Todo extends BaseEntity {
 
     @Column(name = "TASK", length = 140)
